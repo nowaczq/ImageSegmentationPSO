@@ -3,6 +3,7 @@ package View;
 import Controler.CMainAlgorithm;
 
 import javax.swing.*;
+import java.io.IOException;
 
 /**
  * Created by dom on 2015-10-28.
@@ -10,14 +11,13 @@ import javax.swing.*;
 public class VMainScreen extends JFrame
 {
     public String fileName="obraz.jpg";
-    private JTextArea textArea;
     public JMenu optionsMenu = new JMenu("Options");
     public JMenuItem exit = new JMenuItem("Exit");
     public JMenuItem fileChooser = new JMenuItem("Load file");
     public JMenuItem help = new JMenuItem("Help");
     public JMenuItem fileSaver = new JMenuItem("Save file");
 
-    public VMainScreen()
+    public VMainScreen() throws IOException
     {
             setSize(1280, 720);
             setTitle("PSOSegmentation");
@@ -53,5 +53,5 @@ public class VMainScreen extends JFrame
         return this.fileName;
     }
 
- 
+
 }

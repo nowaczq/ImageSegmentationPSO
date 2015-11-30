@@ -1,6 +1,6 @@
 package View;
 
-import Controler.CLogicControler;
+import Controler.CMainAlgorithm;
 
 import javax.swing.*;
 
@@ -39,10 +39,10 @@ public class VMainScreen extends JFrame
         this.optionsMenu.add(this.fileSaver);
         this.optionsMenu.add(this.help);
         this.optionsMenu.add(this.exit);
-        this.fileSaver.addActionListener(new CLogicControler());
-        this.exit.addActionListener(new CLogicControler());
-        this.fileChooser.addActionListener(new CLogicControler());
-        this.help.addActionListener(new CLogicControler());
+        this.fileSaver.addActionListener(new CMainAlgorithm());
+        this.exit.addActionListener(new CMainAlgorithm());
+        this.fileChooser.addActionListener(new CMainAlgorithm());
+        this.help.addActionListener(new CMainAlgorithm());
         menuBar.add(this.optionsMenu);
         return menuBar;
     }

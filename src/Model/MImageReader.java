@@ -19,7 +19,7 @@ public class MImageReader
         readImage();
     }
 
-    private void readImage()
+    public BufferedImage readImage()
     {
         this.image = null;
         try
@@ -28,14 +28,16 @@ public class MImageReader
         }
         catch (IOException e)
         {
-
+            System.out.println(e.toString()+" Image '"
+                    +this.imageName+"' not found.");
         }
+        return this.image;
     }
     public BufferedImage getImage()
     {
         return this.image;
     }
-
+/*
     public int getColourOfPixel(int x, int y)
     {
        return this.image.getRGB(x,y);
@@ -50,5 +52,5 @@ public class MImageReader
     {
         return this.image.getWidth();
     }
-
+*/
 }

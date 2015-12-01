@@ -4,6 +4,8 @@ import Model.MAlgorithmCalculations;
 import Model.MImageReader;
 import Model.MImageSaver;
 import View.VMainScreen;
+import View.VRawImage;
+import View.VSegmentedImage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +24,8 @@ public class CMainAlgorithm implements ActionListener
     public static MImageSaver mImageSaver;
     private static VMainScreen mainScreen;
     private static BufferedImage dstImage;
+    private static VRawImage raw;
+    private static VSegmentedImage segmn;
 
     public static void main(String[] args) throws IOException {
         mainScreen = new VMainScreen();
@@ -49,6 +53,7 @@ public class CMainAlgorithm implements ActionListener
             mainScreen.fileName=fd.getFile();
             mImageReader = new MImageReader(mainScreen.getFileName());
             dstImage = mImageReader.getImage();
+            raw = new VRawImage(dstImage);
             MAlgorithmCalculations mAlgorithmCalculations = new MAlgorithmCalculations();
             this.dstImage = mAlgorithmCalculations.calculate(mImageReader.readImage(),10,1);
         }
@@ -58,7 +63,7 @@ public class CMainAlgorithm implements ActionListener
             fd.setVisible(true);
             mainScreen.fileName=fd.getFile();
             mImageSaver = new MImageSaver(dstImage,mainScreen.getFileName()+".png");
-
+            segmn = new VSegmentedImage(dstImage);
         }
         if (c == mainScreen.help)
         {

@@ -3,6 +3,7 @@ package View;
 import Controler.CMainAlgorithm;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -16,6 +17,7 @@ public class VMainScreen extends JFrame
     public JMenuItem fileChooser = new JMenuItem("Load file");
     public JMenuItem help = new JMenuItem("Help");
     public JMenuItem fileSaver = new JMenuItem("Save file");
+    public JButton startButton;
 
     public VMainScreen() throws IOException
     {
@@ -23,11 +25,22 @@ public class VMainScreen extends JFrame
             setTitle("PSOSegmentation");
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setJMenuBar(getJMenuBar());
+            //addStartButton();
+            add(addStartButton());
             setLocationRelativeTo(null);
             setResizable(false);
             setLayout(null);
             setVisible(true);
 
+    }
+
+    private JButton addStartButton()
+    {
+        this.startButton = new JButton("Start");
+        this.startButton.setBounds(50,50,180,30);
+        this.startButton.setBackground(Color.green);
+        this.startButton.addActionListener(new CMainAlgorithm());
+        return this.startButton;
     }
 
     @Override
@@ -49,7 +62,6 @@ public class VMainScreen extends JFrame
 
     public String getFileName()
     {
-        //return this.fileName;
         return this.fileName;
     }
 

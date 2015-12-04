@@ -54,8 +54,6 @@ public class CMainAlgorithm implements ActionListener
             mImageReader = new MImageReader(mainScreen.getFileName());
             dstImage = mImageReader.getImage();
             raw = new VRawImage(dstImage);
-            MAlgorithmCalculations mAlgorithmCalculations = new MAlgorithmCalculations();
-            this.dstImage = mAlgorithmCalculations.calculate(mImageReader.readImage(),10,1);
         }
         if (c == mainScreen.fileSaver)
         {
@@ -73,16 +71,10 @@ public class CMainAlgorithm implements ActionListener
                     "                    + \" [clustercount 0-255]\"\n" +
                     "                    + \" [mode -i (ITERATIVE)|-c (CONTINUOS)]\"\n");
         }
-        /*TUTAJ PRZYCISK STARTUJACY ALGORYTM
-        if (c == mainScreen.start)
+        if (c == mainScreen.startButton)
         {
             MAlgorithmCalculations mAlgorithmCalculations = new MAlgorithmCalculations();
-            // create new KMeans object
-            CMainAlgorithm kmeans = new CMainAlgorithm();
-            // call the function to actually start the clustering
-            this.dstImage = mAlgorithmCalculations.calculate(mImageReader.readImage(),
-                    10,1);
-            mImageSaver = new MImageSaver(dstImage,"ol112a.png");
-        }*/
+            this.dstImage = mAlgorithmCalculations.calculate(mImageReader.readImage(),10,1);
+        }
     }
 }

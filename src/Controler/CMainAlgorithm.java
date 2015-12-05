@@ -74,7 +74,7 @@ public class CMainAlgorithm implements ActionListener
         if (c == mainScreen.startButton)
         {
             MAlgorithmCalculations mAlgorithmCalculations = new MAlgorithmCalculations();
-            this.dstImage = mAlgorithmCalculations.calculate(mImageReader.readImage(),10,1);
+            this.dstImage = mAlgorithmCalculations.calculate(mImageReader.readImage(),Integer.parseInt(mainScreen.rangeText.getText()),Integer.parseInt(mainScreen.modeText.getText()));
         }
     }
 }

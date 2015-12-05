@@ -18,6 +18,10 @@ public class VMainScreen extends JFrame
     public JMenuItem help = new JMenuItem("Help");
     public JMenuItem fileSaver = new JMenuItem("Save file");
     public JButton startButton;
+    private JLabel rangeLabel;
+    private JLabel modeLabel;
+    public JTextArea rangeText;
+    public JTextArea modeText;
 
     public VMainScreen() throws IOException
     {
@@ -25,8 +29,9 @@ public class VMainScreen extends JFrame
             setTitle("PSOSegmentation");
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setJMenuBar(getJMenuBar());
-            //addStartButton();
             add(addStartButton());
+            addLabel();
+            addText();
             setLocationRelativeTo(null);
             setResizable(false);
             setLayout(null);
@@ -38,9 +43,31 @@ public class VMainScreen extends JFrame
     {
         this.startButton = new JButton("Start");
         this.startButton.setBounds(50,50,180,30);
-        this.startButton.setBackground(Color.green);
+        this.startButton.setFocusPainted(Boolean.parseBoolean(null));
         this.startButton.addActionListener(new CMainAlgorithm());
         return this.startButton;
+    }
+
+    private void addLabel()
+    {
+        this.rangeLabel = new JLabel("Colour range: ");
+        this.rangeLabel.setBounds(50,85,100,30);
+        add(this.rangeLabel);
+        this.modeLabel = new JLabel("Mode: ");
+        this.modeLabel.setBounds(50,120,100,30);
+        add(this.modeLabel);
+    }
+
+
+
+    private void addText()
+    {
+        this.rangeText = new JTextArea();
+        this.rangeText.setBounds(155,85,100,20);
+        add(this.rangeText);
+        this.modeText = new JTextArea();
+        this.modeText.setBounds(155,120,100,20);
+        add(this.modeText);
     }
 
     @Override

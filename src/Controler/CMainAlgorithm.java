@@ -1,6 +1,6 @@
 package Controler;
 
-import Model.MAlgorithmCalculations;
+import Model.MSRGAlgorithm;
 import Model.MImageReader;
 import Model.MImageSaver;
 import View.VMainScreen;
@@ -34,10 +34,7 @@ public class CMainAlgorithm implements ActionListener
     {
     }
 
-    public BufferedImage getImage()
-    {
-        return this.dstImage;
-    }
+
 
     @Override
     public void actionPerformed(ActionEvent e)
@@ -60,20 +57,23 @@ public class CMainAlgorithm implements ActionListener
             fd.setVisible(true);
             mainScreen.fileName=fd.getFile();
             mImageSaver = new MImageSaver(dstImage,mainScreen.getFileName()+".png");
-            new VSegmentedImage(dstImage);
+
         }
         if (c == mainScreen.help)
         {
-            JOptionPane.showMessageDialog(mainScreen, "\"Usage: \"\n" +
-                    "                    + \" [source image filename]\"\n" +
-                    "                    + \" [destination image filename]\"\n" +
-                    "                    + \" [clustercount 0-255]\"\n" +
-                    "                    + \" [mode -i (ITERATIVE)|-c (CONTINUOS)]\"\n");
+            JOptionPane.showMessageDialog(mainScreen, "Usage: \n" +
+                    "1. Select input image from Options -> Load\n" +
+                    "2. Fill colour field with number from range 1-255\n" +
+                    "3. Fill mode field with proper number -- 1 or 2  (continous or iterative mode)\n" +
+                    "4. Press the start button and wait for a while (a while will be longer \n"+
+                    "    if you have choosen iterative mode or/plus wide range of colours)\n"+
+                    "5. To save image please select Options -> Save and fill the field for image name\n");
         }
         if (c == mainScreen.startButton)
         {
-            MAlgorithmCalculations mAlgorithmCalculations = new MAlgorithmCalculations();
-            this.dstImage = mAlgorithmCalculations.calculate(mImageReader.readImage(),Integer.parseInt(mainScreen.rangeText.getText()),Integer.parseInt(mainScreen.modeText.getText()));
+            MSRGAlgorithm MSRGAlgorithm = new MSRGAlgorithm();
+            this.dstImage = MSRGAlgorithm.calculate(mImageReader.readImage(),Integer.parseInt(mainScreen.rangeText.getText()),Integer.parseInt(mainScreen.modeText.getText()));
+            new VSegmentedImage(dstImage);
         }
     }
 }

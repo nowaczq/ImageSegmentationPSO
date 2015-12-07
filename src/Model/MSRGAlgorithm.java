@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * Created by dom on 2015-11-30.
  */
-public class MAlgorithmCalculations
+public class MSRGAlgorithm
 {
     public static final int MODE_CONTINUOUS = 1;
     public static final int MODE_ITERATIVE = 2;
@@ -20,8 +20,8 @@ public class MAlgorithmCalculations
         int w = image.getWidth();
         int h = image.getHeight();
         this.clusters = createClusters(image,k);
-        int[] lut = new int[w*h];
-        Arrays.fill(lut, -1);
+        int[] stackOfPixels = new int[w*h];
+        Arrays.fill(stackOfPixels, -1);
 
 
         boolean pixelChangedCluster = true;
@@ -38,19 +38,19 @@ public class MAlgorithmCalculations
                 {
                     int pixel = image.getRGB(x, y); //TUTAJ TRZEBA PODPIĄĆ ALGORYTM PSO ŻEBY ZAMIAST Z PĘTLI WYBIERAŁ MOŻLIWIE NAJLEPSZE PUNKTY
                     MCluster cluster = findMinimalCluster(pixel);
-                    if (lut[w*y+x]!=cluster.getId())
+                    if (stackOfPixels[w*y+x]!=cluster.getId())
                     {
                         if (mode==MODE_CONTINUOUS)
                         {
-                            if (lut[w*y+x]!=-1)
+                            if (stackOfPixels[w*y+x]!=-1)
                             {
-                                this.clusters[lut[w*y+x]].removePixel(pixel);
+                                this.clusters[stackOfPixels[w*y+x]].removePixel(pixel);
                             }
 
                             cluster.addPixel(pixel);
                         }
                         pixelChangedCluster = true;
-                        lut[w*y+x] = cluster.getId();
+                        stackOfPixels[w*y+x] = cluster.getId();
                     }
                 }
             }
@@ -65,7 +65,7 @@ public class MAlgorithmCalculations
                 {
                     for (int x=0;x<w;x++)
                     {
-                        int clusterId = lut[w*y+x];
+                        int clusterId = stackOfPixels[w*y+x];
                         this.clusters[clusterId].addPixel(image.getRGB(x, y));
                     }
                 }
@@ -78,7 +78,7 @@ public class MAlgorithmCalculations
         {
             for (int x=0;x<w;x++)
             {
-                int clusterId = lut[w*y+x];
+                int clusterId = stackOfPixels[w*y+x];
                 result.setRGB(x, y, this.clusters[clusterId].getRGB());
             }
         }
@@ -88,7 +88,7 @@ public class MAlgorithmCalculations
                 +" loops in "+(end-start)+" ms.");
         return result;
     }
-    public MCluster findMinimalCluster(int rgb)
+    private MCluster findMinimalCluster(int rgb)
     {
         MCluster cluster = null;
         int min = Integer.MAX_VALUE;
@@ -104,7 +104,7 @@ public class MAlgorithmCalculations
         return cluster;
     }
 
-    public MCluster[] createClusters(BufferedImage image, int k)
+    private MCluster[] createClusters(BufferedImage image, int k)
     {
         MCluster[] result = new MCluster[k];
         int x = 0; int y = 0;

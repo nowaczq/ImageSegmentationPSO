@@ -20,7 +20,7 @@ public class VRawImage extends JFrame
         imageIcon = new ImageIcon(newimg);
         setSize(500, 500);
         setTitle("RawImage");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Panel p =new Panel();
         add(p);
         JLabel l =new JLabel(imageIcon);

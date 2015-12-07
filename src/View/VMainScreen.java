@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class VMainScreen extends JFrame
 {
-    public String fileName="obraz.jpg";
+    public String fileName;
     public JMenu optionsMenu = new JMenu("Options");
     public JMenuItem exit = new JMenuItem("Exit");
     public JMenuItem fileChooser = new JMenuItem("Load file");

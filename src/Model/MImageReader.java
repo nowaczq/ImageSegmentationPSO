@@ -37,20 +37,5 @@ public class MImageReader
     {
         return this.image;
     }
-/*
-    public int getColourOfPixel(int x, int y)
-    {
-       return this.image.getRGB(x,y);
-    }
 
-    public int getHeight()
-    {
-        return this.image.getHeight();
-    }
-
-    public int getWidth()
-    {
-        return this.image.getWidth();
-    }
-*/
 }

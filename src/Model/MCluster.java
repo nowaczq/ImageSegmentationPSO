@@ -13,14 +13,19 @@ public class MCluster
     private int reds;
     private int greens;
     private int blues;
+    private int personalBest;
+    private int globalBest;
+
 
     public MCluster(int id, int rgb)
     {
-        red = rgb>>16&0x000000FF;
-        green = rgb>> 8&0x000000FF;
-        blue = rgb>> 0&0x000000FF;
+        this.red = rgb>>16&0x000000FF;
+        this.green = rgb>> 8&0x000000FF;
+        this.blue = rgb>> 0&0x000000FF;
         this.id = id;
         addPixel(rgb);
+        this.personalBest = 0;
+        this.globalBest =0;
     }
 
     public void clear()
@@ -85,5 +90,17 @@ public class MCluster
         int d = (rx+gx+bx) / 3;
         return d;
     }
+
+    public int getPersonalBest()
+    {
+        return this.personalBest;
+    }
+
+    public void setPersonalBest(int k)
+    {
+        this.personalBest = k;
+    }
+
+
 
 }

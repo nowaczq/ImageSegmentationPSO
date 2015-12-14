@@ -1,6 +1,6 @@
 package Controler;
 
-import Model.MSRGAlgorithm;
+import Model.MKMeansAlgorithm;
 import Model.MImageReader;
 import Model.MImageSaver;
 import View.VMainScreen;
@@ -71,8 +71,8 @@ public class CMainAlgorithm implements ActionListener
         }
         if (c == mainScreen.startButton)
         {
-            MSRGAlgorithm MSRGAlgorithm = new MSRGAlgorithm();
-            this.dstImage = MSRGAlgorithm.calculate(mImageReader.readImage(),Integer.parseInt(mainScreen.rangeText.getText()),Integer.parseInt(mainScreen.modeText.getText()));
+            MKMeansAlgorithm MKMeansAlgorithm = new MKMeansAlgorithm();
+            this.dstImage = MKMeansAlgorithm.calculate(mImageReader.readImage(),Integer.parseInt(mainScreen.rangeText.getText()),Integer.parseInt(mainScreen.modeText.getText()));
             new VSegmentedImage(dstImage);
         }
     }

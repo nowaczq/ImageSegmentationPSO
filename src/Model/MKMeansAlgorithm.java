@@ -25,8 +25,11 @@ public class MKMeansAlgorithm
         this.clusters = createClusters(image,k);
         int[] stackOfPixels = new int[w*h];
         Arrays.fill(stackOfPixels, -1);
+        int[] pBest = new int[w*h];
+        Arrays.fill(pBest, -1);
         this.colourRange =k;
-
+        int pbest = 0;
+        int []pBestXY = new int [2];
         boolean pixelChangedCluster = true;
 
 
@@ -41,7 +44,7 @@ public class MKMeansAlgorithm
                 {
                     int pixel = image.getRGB(x, y); //TUTAJ TRZEBA PODPIĄĆ ALGORYTM PSO ŻEBY ZAMIAST Z PĘTLI WYBIERAŁ MOŻLIWIE NAJLEPSZE PUNKTY
                     MCluster cluster = findMinimalCluster(pixel);
-                    if (stackOfPixels[w*y+x]!=cluster.getId())
+                    if (stackOfPixels[w * y + x] != cluster.getId())
                     {
                         /*if (mode==MODE_CONTINUOUS)
                         {
@@ -53,8 +56,16 @@ public class MKMeansAlgorithm
                             cluster.addPixel(pixel);
                         }*/
                         pixelChangedCluster = true;
-                        stackOfPixels[w*y+x] = cluster.getId();
+                        stackOfPixels[w * y + x] = cluster.getId();
                     }
+                    /*
+                    pBest[w * y + x] = cluster.getPersonalBest();
+                    if (pBest[w * y + x] < pbest)
+                    {
+                        pbest = pBest[w * y + x];
+                        pBestXY[0] = x;
+                        pBestXY[1] = y;
+                    }*/
                 }
             }
             if (mode==MODE_ITERATIVE)
@@ -62,7 +73,9 @@ public class MKMeansAlgorithm
 
                 for (int i=0;i<this.clusters.length;i++)
                 {
+                   // clusters = redefineClusterCenter(image,clusters,pBestXY[0],pBestXY[1],i);
                     this.clusters[i].clear();
+
                 }
                 for (int y=0;y<h;y++)
                 {
@@ -70,10 +83,13 @@ public class MKMeansAlgorithm
                     {
                         int clusterId = stackOfPixels[w*y+x];
                         this.clusters[clusterId].addPixel(image.getRGB(x, y));
+
                     }
                 }
             }
-       //    clusters = redefineClusterCenter(image,clusters);
+         /*   clusters = redefineClusterCenter(image,clusters,pBestXY[0],pBestXY[1],1);
+            if(loops == k)
+                pixelChangedCluster = false;*/
 
 
         }
@@ -108,6 +124,7 @@ public class MKMeansAlgorithm
                 cluster = this.clusters[i];
             }
         }
+        cluster.setPersonalBest(min);
         return cluster;
     }
 
@@ -142,8 +159,9 @@ public class MKMeansAlgorithm
     //DODAĆ METODĘ WYLICZAJĄCĄ ŚRODKI W TRAKCIE, A NIE TYLKO PRZY TWORZENIU
     // result[i] = new MCluster(i,image.getRGB(fitnessFunction(p),fitnessFunction(u))); TO POWINNO BYĆ W METODZIE KTÓRA WYLICZA ŚRODKI(KOLORY) W TRAKCIE
 
-    private MCluster[] redefineClusterCenter(BufferedImage image,MCluster []clstr)
+    private MCluster[] redefineClusterCenter(BufferedImage image,MCluster []clstr,int x,int y,int i)
     {
+        /*
         MCluster []result = clstr;
         int xx=0;
         int yy=0;
@@ -153,13 +171,15 @@ public class MKMeansAlgorithm
         for(int i = 0; i < result.length;i++)
         {
             int p=new Random().nextInt(xx+1);
-            int u=new Random().nextInt(yy+1) ;System.out.println(p +" " +u );
-            result[i] = new MCluster(i,image.getRGB(xx,yy));
+            int u=new Random().nextInt(yy+1) ;
+            System.out.println(p +" " +u );
+            result[i] = new MCluster(i,image.getRGB(x,y));
 
 
             xx+=dx; yy+=dy;
-        }
-        return result;
+        }*/
+        clstr[i] = new MCluster(i,image.getRGB(x,y));
+        return clstr;
     }
 
 
@@ -174,6 +194,7 @@ public class MKMeansAlgorithm
             //ZAMIAST NA SZTYWNO BRAĆ ŚRODEK TJ. KOLOR TRZEBA ZAINICJOWAĆ LOSOWY ŚRODEK TJ KOLOR
             int p=new Random().nextInt(x+1);
             int u=new Random().nextInt(y+1) ;
+//            result[i] = new MCluster(i,image.getRGB(x,y));
             result[i] = new MCluster(i,image.getRGB(p,u));
 
             System.out.println(p +" " +u );

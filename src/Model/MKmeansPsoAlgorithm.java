@@ -5,18 +5,26 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
- * Created by dom on 2015-11-30.
+ * Created by dom on 2015-12-21.
  */
-public class MKMeansAlgorithm
+public class MKmeansPsoAlgorithm
 {
     private MCluster[] clusters;
+    private MCluster[] tableOfParticles;
+    BufferedImage image;
 
-    public BufferedImage calculate(BufferedImage image, int k)
+    public BufferedImage calculate (BufferedImage imag, int k)
     {
+        this.image = imag;
+        this.clusters = createClusters(image, k);
+        this.tableOfParticles = createParticles(image);
+
+            //TO SIE ROBI MILIARD RAZY, POPRAWIC NAJPRAWDOPODOBNIEJ POZYCJONOWANIE W TABLICY -- GDZIE CO JEST ITP
+            findBetterColourCentroid(image, k);
+
         long start = System.currentTimeMillis();
         int w = image.getWidth();
         int h = image.getHeight();
-        this.clusters = createClusters(image,k);
         int[] stackOfPixels = new int[w*h]; //ARRAY OF PARTICLES
         Arrays.fill(stackOfPixels, -1);
         boolean pixelChangedCluster = true;
@@ -25,6 +33,7 @@ public class MKMeansAlgorithm
         int loops = 0;
         while (pixelChangedCluster)
         {
+
             pixelChangedCluster = false;
             loops++;
 
@@ -76,6 +85,85 @@ public class MKMeansAlgorithm
         return result;
     }
 
+    private void findBetterColourCentroid(BufferedImage image, int k)
+    {
+        int x =0, y =0, prevX =0, prevY =0;
+        int dx = image.getHeight()/k;
+        int dy = image.getWidth()/k;
+
+        int min;
+        int avg = 0;
+
+        for (int i = 0; i < k; i++)
+        {
+
+            min = this.clusters[i].getRGB();
+            while (x < dx)
+            {
+                while (y < dy)
+                {
+                    avg += this.tableOfParticles[x*image.getWidth()+y].getRGB();
+
+                }
+            }
+            avg = avg/(dx*dy);
+            if(avg < min)
+            {
+                min = avg;
+                this.clusters[i] = new MCluster(i,min);
+            }
+            x += dx;
+            y += dy;
+            dx += dx;
+            dy += dy;
+        }
+    }
+
+    private MCluster[] createClusters(BufferedImage image, int k)
+    {
+        MCluster[] result = new MCluster[k];
+        int p ,u,prevX=0,prevY=0;
+        int x = 0; int y = 0;
+        int dx = image.getWidth()/k;
+        int dy = image.getHeight()/k;
+        for (int i=0;i<k;i++)
+        {
+            if(i == 0)
+            {
+                p=new Random().nextInt(x+1);
+                u=new Random().nextInt(y+1) ;
+            }
+            else
+            {
+                p=new Random().nextInt(x-prevX+1)+prevX;
+                u=new Random().nextInt(y-prevY+1)+prevY ;
+            }
+            result[i] = new MCluster(i,image.getRGB(p,u));
+            prevX=x;
+            prevY=y;
+            System.out.println(p +" " +u +" x: "+prevX+" y: "+prevY);
+            x+=dx; y+=dy;
+        }
+        return result;
+    }
+
+    private MCluster[] createParticles(BufferedImage image)
+    {
+        MCluster[] result = new MCluster[image.getHeight()*image.getWidth()];
+        int jump = image.getHeight()*image.getWidth();
+        int i =0;
+        for(int x = 0; x < image.getWidth()-1;x++)
+        {
+            for(int y = 0; y < image.getHeight()-1;y++)
+            {
+                result[i] = new MCluster(i,image.getRGB(x,y));
+                bestMatchCluster(result[i].getRGB());
+                i++;
+            }
+        }
+        return result;
+    }
+
     private MCluster findMinimalCluster(int rgb) //distance to cluster center -- COLOUR
     {
         MCluster cluster = null;
@@ -92,34 +180,17 @@ public class MKMeansAlgorithm
         return cluster;
     }
 
-    private MCluster[] createClusters(BufferedImage image, int k)
+    private void bestMatchCluster(int rgb) //distance to cluster center -- COLOUR
     {
-        MCluster[] result = new MCluster[k];
-        int p ,u,prevX=0,prevY=0;
-        int x = 0; int y = 0;
-        int dx = image.getWidth()/k;
-        int dy = image.getHeight()/k;
-        for (int i=0;i<k;i++)
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < this.clusters.length;i++)
         {
-            //ZAMIAST NA SZTYWNO BRAĆ ŚRODEK TJ. KOLOR TRZEBA ZAINICJOWAĆ LOSOWY ŚRODEK TJ KOLOR
-            //random.nextInt(max - min + 1) + min
-            if(i == 0)
+            int distance = this.clusters[i].distance(rgb);
+            if(distance < min)
             {
-                 p=new Random().nextInt(x+1);
-                 u=new Random().nextInt(y+1) ;
+                min = distance;
+                this.clusters[i].addPixel(distance);
             }
-            else
-            {
-                p=new Random().nextInt(x-prevX+1)+prevX;
-                u=new Random().nextInt(y-prevY+1)+prevY ;
-            }
-            result[i] = new MCluster(i,image.getRGB(p,u));
-            prevX=x;
-            prevY=y;
-            System.out.println(p +" " +u +" x: "+prevX+" y: "+prevY);
-            x+=dx; y+=dy;
         }
-        return result;
     }
-
 }

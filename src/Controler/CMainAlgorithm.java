@@ -1,8 +1,8 @@
 package Controler;
 
-import Model.MKMeansAlgorithm;
 import Model.MImageReader;
 import Model.MImageSaver;
+import Model.MKMeansAlgorithm;
 import View.VMainScreen;
 import View.VRawImage;
 import View.VSegmentedImage;
@@ -71,8 +71,11 @@ public class CMainAlgorithm implements ActionListener
         }
         if (c == mainScreen.startButton)
         {
+            /*MKMeansAlgorithm MKMeansAlgorithm = new MKMeansAlgorithm();
+            this.dstImage = MKMeansAlgorithm.calculate(mImageReader.readImage(),Integer.parseInt(mainScreen.rangeText.getText()));
+            new VSegmentedImage(dstImage);*/
             MKMeansAlgorithm MKMeansAlgorithm = new MKMeansAlgorithm();
-            this.dstImage = MKMeansAlgorithm.calculate(mImageReader.readImage(),Integer.parseInt(mainScreen.rangeText.getText()),Integer.parseInt(mainScreen.modeText.getText()));
+            this.dstImage = MKMeansAlgorithm.calculate(mImageReader.readImage(),Integer.parseInt(mainScreen.rangeText.getText()));
             new VSegmentedImage(dstImage);
         }
     }

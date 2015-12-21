@@ -101,6 +101,11 @@ public class MCluster
         this.personalBest = k;
     }
 
+    public void setGlobalBest (int k)
+    {
+        this.globalBest =k;
+    }
+
 
 
 }

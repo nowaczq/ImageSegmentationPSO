@@ -103,8 +103,9 @@ public class MKmeansPsoAlgorithm
                 while (y < dy)
                 {
                     avg += this.tableOfParticles[x*image.getWidth()+y].getRGB();
-
+                    y++;
                 }
+                x++;
             }
             avg = avg/(dx*dy);
             if(avg < min)

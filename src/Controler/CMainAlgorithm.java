@@ -3,6 +3,7 @@ package Controler;
 import Model.MImageReader;
 import Model.MImageSaver;
 import Model.MKMeansAlgorithm;
+import Model.MKmeansPsoAlgorithm;
 import View.VMainScreen;
 import View.VRawImage;
 import View.VSegmentedImage;
@@ -64,12 +65,20 @@ public class CMainAlgorithm implements ActionListener
             JOptionPane.showMessageDialog(mainScreen, "Usage: \n" +
                     "1. Select input image from Options -> Load\n" +
                     "2. Fill colour field with number from range 1-255\n" +
-                    "3. Fill mode field with proper number -- 1 or 2  (continous or iterative mode)\n" +
-                    "4. Press the start button and wait for a while (a while will be longer \n"+
+                    "3. Press the start button and wait for a while (a while will be longer \n"+
                     "    if you have choosen iterative mode or/plus wide range of colours)\n"+
-                    "5. To save image please select Options -> Save and fill the field for image name\n");
+                    "4. To save image please select Options -> Save and fill the field for image name\n");
         }
         if (c == mainScreen.startButton)
+        {
+            /*MKMeansAlgorithm MKMeansAlgorithm = new MKMeansAlgorithm();
+            this.dstImage = MKMeansAlgorithm.calculate(mImageReader.readImage(),Integer.parseInt(mainScreen.rangeText.getText()));
+            new VSegmentedImage(dstImage);*/
+            MKmeansPsoAlgorithm MKMeansAlgorithm = new MKmeansPsoAlgorithm();
+            this.dstImage = MKMeansAlgorithm.calculate(mImageReader.readImage(),Integer.parseInt(mainScreen.rangeText.getText()));
+            new VSegmentedImage(dstImage);
+        }
+        if (c == mainScreen.startButton2)
         {
             /*MKMeansAlgorithm MKMeansAlgorithm = new MKMeansAlgorithm();
             this.dstImage = MKMeansAlgorithm.calculate(mImageReader.readImage(),Integer.parseInt(mainScreen.rangeText.getText()));

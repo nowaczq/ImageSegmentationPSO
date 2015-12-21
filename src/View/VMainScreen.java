@@ -3,7 +3,6 @@ package View;
 import Controler.CMainAlgorithm;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -18,10 +17,9 @@ public class VMainScreen extends JFrame
     public JMenuItem help = new JMenuItem("Help");
     public JMenuItem fileSaver = new JMenuItem("Save file");
     public JButton startButton;
+    public JButton startButton2;
     private JLabel rangeLabel;
-    private JLabel modeLabel;
     public JTextArea rangeText;
-    public JTextArea modeText;
 
     public VMainScreen() throws IOException
     {
@@ -30,6 +28,7 @@ public class VMainScreen extends JFrame
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setJMenuBar(getJMenuBar());
             add(addStartButton());
+            add(addStartButton2());
             addLabel();
             addText();
             setLocationRelativeTo(null);
@@ -42,10 +41,19 @@ public class VMainScreen extends JFrame
     private JButton addStartButton()
     {
         this.startButton = new JButton("Start");
-        this.startButton.setBounds(50,50,180,30);
+        this.startButton.setBounds(50, 50, 180, 30);
         this.startButton.setFocusPainted(Boolean.parseBoolean(null));
         this.startButton.addActionListener(new CMainAlgorithm());
         return this.startButton;
+    }
+
+    private JButton addStartButton2()
+    {
+        this.startButton2 = new JButton("Start Non PSO");
+        this.startButton2.setBounds(450,350,180,30);
+        this.startButton2.setFocusPainted(Boolean.parseBoolean(null));
+        this.startButton2.addActionListener(new CMainAlgorithm());
+        return this.startButton2;
     }
 
     private void addLabel()
@@ -53,9 +61,6 @@ public class VMainScreen extends JFrame
         this.rangeLabel = new JLabel("Colour range: ");
         this.rangeLabel.setBounds(50,85,100,30);
         add(this.rangeLabel);
-        this.modeLabel = new JLabel("Mode: ");
-        this.modeLabel.setBounds(50,120,100,30);
-        add(this.modeLabel);
     }
 
 
@@ -65,9 +70,6 @@ public class VMainScreen extends JFrame
         this.rangeText = new JTextArea();
         this.rangeText.setBounds(155,85,100,20);
         add(this.rangeText);
-        this.modeText = new JTextArea();
-        this.modeText.setBounds(155,120,100,20);
-        add(this.modeText);
     }
 
     @Override

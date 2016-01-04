@@ -13,8 +13,6 @@ public class MCluster
     private int reds;
     private int greens;
     private int blues;
-    private int personalBest;
-    private int globalBest;
 
 
     public MCluster(int id, int rgb)
@@ -24,8 +22,7 @@ public class MCluster
         this.blue = rgb>> 0&0x000000FF;
         this.id = id;
         addPixel(rgb);
-        this.personalBest = 0;
-        this.globalBest =0;
+
     }
 
     public void clear()
@@ -91,20 +88,7 @@ public class MCluster
         return d;
     }
 
-    public int getPersonalBest()
-    {
-        return this.personalBest;
-    }
 
-    public void setPersonalBest(int k)
-    {
-        this.personalBest = k;
-    }
-
-    public void setGlobalBest (int k)
-    {
-        this.globalBest =k;
-    }
 
 
 

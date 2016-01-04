@@ -71,18 +71,14 @@ public class CMainAlgorithm implements ActionListener
         }
         if (c == mainScreen.startButton)
         {
-            /*MKMeansAlgorithm MKMeansAlgorithm = new MKMeansAlgorithm();
-            this.dstImage = MKMeansAlgorithm.calculate(mImageReader.readImage(),Integer.parseInt(mainScreen.rangeText.getText()));
-            new VSegmentedImage(dstImage);*/
+
             MKmeansPsoAlgorithm MKMeansAlgorithm = new MKmeansPsoAlgorithm();
             this.dstImage = MKMeansAlgorithm.calculate(mImageReader.readImage(),Integer.parseInt(mainScreen.rangeText.getText()));
             new VSegmentedImage(dstImage);
         }
         if (c == mainScreen.startButton2)
         {
-            /*MKMeansAlgorithm MKMeansAlgorithm = new MKMeansAlgorithm();
-            this.dstImage = MKMeansAlgorithm.calculate(mImageReader.readImage(),Integer.parseInt(mainScreen.rangeText.getText()));
-            new VSegmentedImage(dstImage);*/
+
             MKMeansAlgorithm MKMeansAlgorithm = new MKMeansAlgorithm();
             this.dstImage = MKMeansAlgorithm.calculate(mImageReader.readImage(),Integer.parseInt(mainScreen.rangeText.getText()));
             new VSegmentedImage(dstImage);

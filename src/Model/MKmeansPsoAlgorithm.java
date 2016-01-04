@@ -19,8 +19,7 @@ public class MKmeansPsoAlgorithm
         this.clusters = createClusters(image, k);
         this.tableOfParticles = createParticles(image);
 
-            //TO SIE ROBI MILIARD RAZY, POPRAWIC NAJPRAWDOPODOBNIEJ POZYCJONOWANIE W TABLICY -- GDZIE CO JEST ITP
-            findBetterColourCentroid(image, k);
+        findBetterColourCentroid(image.getHeight(),image.getWidth(), k);
 
         long start = System.currentTimeMillis();
         int w = image.getWidth();
@@ -54,7 +53,6 @@ public class MKmeansPsoAlgorithm
 
             for (int i=0;i<this.clusters.length;i++)
             {
-
                 this.clusters[i].clear();
             }
             for (int y=0;y<h;y++)
@@ -65,8 +63,6 @@ public class MKmeansPsoAlgorithm
                     this.clusters[clusterId].addPixel(image.getRGB(x, y));
                 }
             }
-            //TUTAJ TRZEBA ZMIENIĆ SRODKI NA BARDZIEJ OPTYMALNE
-            //this.clusters = createClusters(image,k);
         }
 
         BufferedImage result = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
@@ -85,38 +81,38 @@ public class MKmeansPsoAlgorithm
         return result;
     }
 
-    private void findBetterColourCentroid(BufferedImage image, int k)
+    private void findBetterColourCentroid(int xx, int yy, int k)
     {
-        int x =0, y =0, prevX =0, prevY =0;
-        int dx = image.getHeight()/k;
-        int dy = image.getWidth()/k;
+        int x =0, y = 0;
+        int dx = xx;
+        int dy = yy;
 
         int min;
-        int avg = 0;
 
         for (int i = 0; i < k; i++)
         {
+            if (this.clusters[i].getRGB() != 0)
+            {
 
-            min = this.clusters[i].getRGB();
-            while (x < dx)
-            {
-                while (y < dy)
+                min = this.clusters[i].getRGB();
+                while (x < dx)
                 {
-                    avg += this.tableOfParticles[x*image.getWidth()+y].getRGB();
-                    y++;
+                    while (y < dy)
+                    {
+                        if (this.tableOfParticles[x * yy + y].getRGB() < min)
+                        {
+                            min = this.tableOfParticles[x * yy + y].getRGB();
+                            this.clusters[i] = new MCluster(i, min);
+                        }
+                        y++;
+                    }
+                    x++;
                 }
-                x++;
+                x += dx;
+                y += dy;
+                dx += dx;
+                dy += dy;
             }
-            avg = avg/(dx*dy);
-            if(avg < min)
-            {
-                min = avg;
-                this.clusters[i] = new MCluster(i,min);
-            }
-            x += dx;
-            y += dy;
-            dx += dx;
-            dy += dy;
         }
     }
 
